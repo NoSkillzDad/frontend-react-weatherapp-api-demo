@@ -7,31 +7,37 @@ import axios from "axios";
 
 function App() {
 
-  const [weatherData, setWeatherData] = useState({});
+    const [weatherData, setWeatherData] = useState({});
+    const [location, setLocation] = useState('hilversum');
 
-  const getWeather = async () => {
-    try {
-      const response = await axios.get("http://localhost:8000/getweather");
-        console.log(response.data);
-      setWeatherData(response.data);
-    } catch (e) {
-      console.error(e);
+    const getWeather = async (location) => {
+        try {
+                const response = await axios.get(`http://localhost:8000/getweather/${location}`);
+                console.log(response.data);
+                setWeatherData(response.data);
+        } catch (e) {
+            console.error(e);
+        }
     }
-  }
 
-  useEffect(() => {
-    getWeather();
-  }, []);
+    useEffect(() => {
+        getWeather(location);
+    }, []);
 
-  return (Object.keys(weatherData).length > 0  &&
-    <>
-      <div className="weather-container">
+    useEffect(() => {
+        getWeather(location);
+    }, [location]);
 
-        {/*HEADER -------------------- */}
-        <div className="weather-header">
-          <SearchBar/>
+    return (Object.keys(weatherData).length > 0 &&
+        <>
+            <div className="weather-container">
 
-          <span className="location-details">
+
+                {/*HEADER -------------------- */}
+                <div className="weather-header">
+                    <SearchBar setLocationHandler={setLocation}/>
+
+                    <span className="location-details">
 
             <h2>{weatherData.weather[0].description}</h2>
             <h3>{weatherData.name}</h3>
@@ -39,24 +45,24 @@ function App() {
 
             <button type="button" onClick={getWeather}>
             {/*<button type="button" onClick={fetchData}>*/}
-              Haal data op!
+                Haal data op!
             </button>
           </span>
-        </div>
+                </div>
 
-        {/*CONTENT ------------------ */}
-        <div className="weather-content">
-          <TabBarMenu/>
+                {/*CONTENT ------------------ */}
+                <div className="weather-content">
+                    <TabBarMenu/>
 
-          <div className="tab-wrapper">
-            Alle inhoud van de tabbladen komt hier!
-          </div>
-        </div>
+                    <div className="tab-wrapper">
+                        Alle inhoud van de tabbladen komt hier!
+                    </div>
+                </div>
 
-        <MetricSlider/>
-      </div>
-    </>
-  );
+                <MetricSlider/>
+            </div>
+        </>
+    );
 }
 
 export default App;
