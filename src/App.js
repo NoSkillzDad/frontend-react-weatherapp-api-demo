@@ -1,11 +1,29 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import SearchBar from './components/searchBar/SearchBar';
 import TabBarMenu from './components/tabBarMenu/TabBarMenu';
 import MetricSlider from './components/metricSlider/MetricSlider';
 import './App.css';
+import axios from "axios";
 
 function App() {
-  return (
+
+  const [weatherData, setWeatherData] = useState({});
+
+  const getWeather = async () => {
+    try {
+      const response = await axios.get("http://localhost:8000/getweather");
+        console.log(response.data);
+      setWeatherData(response.data);
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  useEffect(() => {
+    getWeather();
+  }, []);
+
+  return (Object.keys(weatherData).length > 0  &&
     <>
       <div className="weather-container">
 
@@ -14,11 +32,13 @@ function App() {
           <SearchBar/>
 
           <span className="location-details">
-            <h2>Bewolkt</h2>
-            <h3> </h3>
-            <h1>14 &deg;</h1>
 
-            <button type="button">
+            <h2>{weatherData.weather[0].description}</h2>
+            <h3>{weatherData.name}</h3>
+            <h1>{weatherData.main.temp}</h1>
+
+            <button type="button" onClick={getWeather}>
+            {/*<button type="button" onClick={fetchData}>*/}
               Haal data op!
             </button>
           </span>

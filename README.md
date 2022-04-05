@@ -151,3 +151,5 @@ moment uit zou moeten zien of de Githistory doorlopen. Let hierbij wel op dat je
 | *WeatherDetail.js* | [Githistory](https://github.githistory.xyz/hogeschoolnovi/frontend-react-weatherapp-tutorial/blob/stap-13-context-consumeren/src/components/weatherDetail/WeatherDetail.js) | [Eindresultaat](https://github.com/hogeschoolnovi/frontend-react-weatherapp-tutorial/blob/stap-13-context-consumeren/src/components/weatherDetail/WeatherDetail.js) |
 | *App.js*           | [Githistory](https://github.githistory.xyz/hogeschoolnovi/frontend-react-weatherapp-tutorial/blob/stap-13-context-consumeren/src/App.js) | [Eindresultaat](https://github.com/hogeschoolnovi/frontend-react-weatherapp-tutorial/blob/stap-13-context-consumeren/src/App.js) |
 | *MetricSlider.js*  | [Githistory](https://github.githistory.xyz/hogeschoolnovi/frontend-react-weatherapp-tutorial/tree/stap-13-context-consumeren/src/components/metricSlider) | [Eindresultaat](https://github.com/hogeschoolnovi/frontend-react-weatherapp-tutorial/tree/stap-13-context-consumeren/src/components/metricSlider) |
+
+[Weather App GH Repo](https://github.com/hogeschoolnovi/frontend-react-weatherapp-tutorial)
