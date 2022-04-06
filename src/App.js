@@ -4,6 +4,7 @@ import TabBarMenu from './components/tabBarMenu/TabBarMenu';
 import MetricSlider from './components/metricSlider/MetricSlider';
 import './App.css';
 import axios from "axios";
+import ForecastTab from "./pages/forecastTab/ForecastTab";
 
 function App() {
 
@@ -12,9 +13,9 @@ function App() {
 
     const getWeather = async (location) => {
         try {
-                const response = await axios.get(`http://localhost:8000/getweather/${location}`);
-                console.log(response.data);
-                setWeatherData(response.data);
+            const response = await axios.get(`http://localhost:8000/getweather/${location}`);
+            // console.log(response.data);
+            setWeatherData(response.data);
         } catch (e) {
             console.error(e);
         }
@@ -31,7 +32,6 @@ function App() {
     return (Object.keys(weatherData).length > 0 &&
         <>
             <div className="weather-container">
-
 
                 {/*HEADER -------------------- */}
                 <div className="weather-header">
@@ -55,7 +55,7 @@ function App() {
                     <TabBarMenu/>
 
                     <div className="tab-wrapper">
-                        Alle inhoud van de tabbladen komt hier!
+                        <ForecastTab coordinates = { weatherData.coord }/>
                     </div>
                 </div>
 

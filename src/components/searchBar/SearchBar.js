@@ -7,7 +7,6 @@ function SearchBar({ setLocationHandler }) {
 
     const onFormSubmit = (e) => {
       e.preventDefault();
-        console.log('query submitted');
         setLocationHandler(query);
     }
 
