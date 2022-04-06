@@ -10,15 +10,22 @@ function App() {
 
     const [weatherData, setWeatherData] = useState({});
     const [location, setLocation] = useState('hilversum');
+    const [error, toggleError] = useState(false);
+    const [loading, toggleLoading] = useState(false);
+
 
     const getWeather = async (location) => {
+        toggleLoading(true);
+        toggleError(false);
         try {
             const response = await axios.get(`http://localhost:8000/getweather/${location}`);
             // console.log(response.data);
             setWeatherData(response.data);
         } catch (e) {
             console.error(e);
+            toggleError(true);
         }
+        toggleLoading(false);
     }
 
     useEffect(() => {
@@ -36,6 +43,10 @@ function App() {
                 {/*HEADER -------------------- */}
                 <div className="weather-header">
                     <SearchBar setLocationHandler={setLocation}/>
+                    {loading && <span>Loading...</span>}
+                    {error && <span className={"wrong-location-error"}>
+                       Oeps! Deze locatie bestaat niet
+                    </span>}
 
                     <span className="location-details">
 
@@ -55,7 +66,7 @@ function App() {
                     <TabBarMenu/>
 
                     <div className="tab-wrapper">
-                        <ForecastTab coordinates = { weatherData.coord }/>
+                        <ForecastTab coordinates={weatherData.coord}/>
                     </div>
                 </div>
 
