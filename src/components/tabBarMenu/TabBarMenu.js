@@ -1,23 +1,24 @@
 import React from 'react';
 import './TabBarMenu.css';
+import {NavLink} from "react-router-dom";
 
 function TabBarMenu() {
-  return (
-    <nav className="tab-bar">
-      <ul>
-        <li>
-          <a className="active" href="/">
-            Vandaag
-          </a>
-        </li>
-        <li>
-          <a href="/">
-            Komende week
-          </a>
-        </li>
-      </ul>
-    </nav>
-  );
+    return (
+        <nav className="tab-bar">
+            <ul>
+                <li>
+                    <NavLink to={"/"} className={"active"}>
+                        Vandaag
+                    </NavLink>
+                </li>
+                <li>
+                    <NavLink to={"/komende-week"} className={"active"}>
+                        Komende week
+                    </NavLink>
+                </li>
+            </ul>
+        </nav>
+    );
 }
 
 export default TabBarMenu;

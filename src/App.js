@@ -1,10 +1,13 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import SearchBar from './components/searchBar/SearchBar';
 import TabBarMenu from './components/tabBarMenu/TabBarMenu';
 import MetricSlider from './components/metricSlider/MetricSlider';
 import './App.css';
 import axios from "axios";
 import ForecastTab from "./pages/forecastTab/ForecastTab";
+import {Route, Routes} from "react-router-dom";
+import TodayTab from "./pages/todayTab/TodayTab";
+import {TempContext} from "./context/TempProvider";
 
 function App() {
 
@@ -12,6 +15,7 @@ function App() {
     const [location, setLocation] = useState('hilversum');
     const [error, toggleError] = useState(false);
     const [loading, toggleLoading] = useState(false);
+    const {kelvinToMetric} = useContext(TempContext);
 
 
     const getWeather = async (location) => {
@@ -52,7 +56,7 @@ function App() {
 
             <h2>{weatherData.weather[0].description}</h2>
             <h3>{weatherData.name}</h3>
-            <h1>{weatherData.main.temp}</h1>
+            <h1>{kelvinToMetric(weatherData.main.temp)}</h1>
 
             <button type="button" onClick={getWeather}>
             {/*<button type="button" onClick={fetchData}>*/}
@@ -64,12 +68,13 @@ function App() {
                 {/*CONTENT ------------------ */}
                 <div className="weather-content">
                     <TabBarMenu/>
-
                     <div className="tab-wrapper">
-                        <ForecastTab coordinates={weatherData.coord}/>
+                        <Routes>
+                            <Route path={"/komende-week"} element={<ForecastTab coordinates={weatherData.coord}/>}/>
+                            <Route path={"/"} element={<TodayTab coordinates={weatherData.coord}/>}/>
+                        </Routes>
                     </div>
                 </div>
-
                 <MetricSlider/>
             </div>
         </>

@@ -1,12 +1,17 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import './ForecastTab.css';
 import axios from "axios";
+import {getDayFromTS} from "../../helpers/dateHelpers";
+import capitalize from "../../helpers/stringHelpers";
+import {TempContext} from "../../context/TempProvider";
 
 function ForecastTab({coordinates}) {
 
     const [forecast, setForecast] = useState([]);
     const [error, toggleError] = useState(false);
     const [loading, toggleLoading] = useState(false);
+
+    const {kelvinToMetric} = useContext(TempContext);
 
     const getForecast = async (coordinates) => {
         toggleLoading(true);
@@ -26,22 +31,6 @@ function ForecastTab({coordinates}) {
         getForecast(coordinates);
     }, [coordinates]);
 
-    const getDay = (dayNum) => {
-        const weekday = ["Zondag", "Maandag", "Dinsdag", "Woensdag", "Donderdag", "Vrijdag", "Zaterdag"];
-        const d = new Date();
-        let day = d.getDay();
-        return weekday[(day + dayNum + 7) % 7];
-    }
-
-    const getDayFromTS = (timestamp) => {
-        const day = new Date(timestamp * 1000);
-        return day.toLocaleDateString('nl-NL', {weekday: 'long'});
-    }
-
-    const capitalize = (string) => {
-        return string.charAt(0).toUpperCase() + string.slice(1);
-    }
-
     const renderDailyForecast = (forecast) => {
         // return forecast.map((daily, index) => (
         return forecast.map((daily) => (
@@ -53,7 +42,7 @@ function ForecastTab({coordinates}) {
 
                 <section className="forecast-weather">
             <span>
-              {daily.temp.day}
+              {kelvinToMetric(daily.temp.day)}
             </span>
                     <span className="weather-description">
               {capitalize(daily.weather[0].description)}
@@ -73,9 +62,9 @@ function ForecastTab({coordinates}) {
             }
             {forecast &&
                 <div className="tab-wrapper">
-                    {loading && <span>Loading...</span>}
-                    {error && <span>Er is iets misgegaan met het ophalen van de data</span>}
-                    {renderDailyForecast(forecast)}
+                        {loading && <span>Loading...</span>}
+                        {error && <span>Er is iets misgegaan met het ophalen van de data</span>}
+                        {renderDailyForecast(forecast)}
                 </div>
             }
         </>
